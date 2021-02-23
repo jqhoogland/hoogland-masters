@@ -19,7 +19,7 @@ from matplotlib import patches, rc
 from tqdm import tqdm
 
 from pytransfer.transfer_operator import TransferOperator
-from randnn.networks import ContinuousNN
+from randnn.networks import GaussianNN
 from pynamics.utils import *
 from pynamics.systems.double_well import *
 from pynamics.systems.lorenz import *
@@ -87,7 +87,7 @@ def plot_samples(coupling_strength: float,
     """
     assert n_sample_steps <= n_steps
 
-    cont_nn = ContinuousNN(coupling_strength=coupling_strength,
+    cont_nn = GaussianNN(coupling_strength=coupling_strength,
                            n_dofs=n_dofs,
                            timestep=timestep, network_seed=network_seed)
 
@@ -199,7 +199,7 @@ def plot_t_imp_scaling(
     plt.show()
 
 def plot_with_g(gs: Sequence,
-                observable: Callable[[np.ndarray, ContinuousNN], float],
+                observable: Callable[[np.ndarray, GaussianNN], float],
                 n_dofs: int = 100,
                 timestep: float = 0.1,
                 n_steps: int = 10000,
@@ -234,7 +234,7 @@ def plot_with_g(gs: Sequence,
 
     for i, g in enumerate(gs):
         # 1. Initialize a network
-        cont_nn = ContinuousNN(coupling_strength=g,
+        cont_nn = GaussianNN(coupling_strength=g,
                                n_dofs=n_dofs,
                                timestep=timestep,
                                network_seed=network_seed)
@@ -254,7 +254,7 @@ def plot_with_g(gs: Sequence,
 
 def plot_curves_with_g(
         gs: Sequence,
-        observable: Callable[[np.ndarray, ContinuousNN], np.ndarray],
+        observable: Callable[[np.ndarray, GaussianNN], np.ndarray],
         dim_observable: Optional[int]=None,
         n_dofs: int = 100,
         timestep: float = 0.1,
@@ -294,7 +294,7 @@ def plot_curves_with_g(
 
     for i, g in enumerate(gs):
         # 1. Initialize a network
-        cont_nn = ContinuousNN(coupling_strength=g,
+        cont_nn = GaussianNN(coupling_strength=g,
                                n_dofs=n_dofs,
                                timestep=timestep,
                                network_seed=network_seed)
