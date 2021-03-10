@@ -14,6 +14,7 @@ scipy = "*"
 tqdm = "*"
 nptyping = "*"
 pytest = "*"
+numba = "*"
 
 [requires]
 python_version = "3.8"

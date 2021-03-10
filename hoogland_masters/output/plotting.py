@@ -11,16 +11,13 @@ Year: 2020
 """
 from collections.abc import Sequence
 from typing import Union, Callable
-import logging
 
-import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib import patches, rc
 from tqdm import tqdm
 
+from pynamics.utils import *
 from pytransfer.transfer_operator import TransferOperator
 from randnn.networks import ContinuousNN
-from pynamics.utils import *
 
 plt.rc('text', usetex=True)
 
@@ -96,32 +93,6 @@ def plot_samples(coupling_strength: float,
         n_samples,
         title="Sample trajectories at $g={}$".format(coupling_strength))
 
-
-def plot_random_matrix_spectrum(matrix, radius=None):
-    N, _ = matrix.shape    # Assuming square
-    if radius is None:
-        radius = np.std(matrix) * np.sqrt(N)
-
-    C = np.zeros((N, N), dtype=np.complex_)
-    eigs, _ = np.linalg.eig(matrix + C)
-
-    #print(eigs)
-    fix, ax = plt.subplots()
-    ax.scatter(eigs.real, eigs.imag, color=(0, 0, 0), s=2, alpha=0.5)
-    circle = patches.Circle((0, 0),
-                            radius,
-                            fill=False,
-                            color="k",
-                            linewidth=2,
-                            edgecolor='b')
-
-    plt.axis("square")
-    ax.add_patch(circle)
-    ax.axvline(x=1., linestyle="--")
-
-    ax.set_title("Eigenvalue spectrum of the connectivity matrix $J_{ij}$")
-    ax.set_ylabel("Complex part")
-    ax.set_xlabel("Real part")
 
 
 def plot_lyapunov_spectrum(lyapunov_spectrum, title="Lyapunov spectrum"):
